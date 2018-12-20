@@ -248,41 +248,23 @@ endfunction
 " PARAM:    num_lines   (v:t_number)    The total number of lines of context
 "                                       to grab, *including* the target line.
 "                                       Must be greater than or equal to 1.
-function! markbar#helpers#FetchContext(buffer_expr, around_line, num_lines) abort
-    if type(a:num_lines) !=# v:t_number
-        throw '`a:num_lines` must be an integer. Gave value: ' . a:num_lines
-    elseif a:num_lines <# 1
-        throw 'Required that `a:num_lines >= 1`. Gave value: ' . a:num_lines
-    endif
+function! markbar#helpers#FetchContext(buffer_expr, start_line, num_lines) abort
+    " the 'context' starts with the line of the mark followed by 'num_lines' lines
+    let l:context = markbar#helpers#FetchBufferLineRange(a:buffer_expr, a:start_line, a:start_line + a:num_lines)
 
-    if a:around_line <# 1
-        throw 'Required that target line no. be positive. Gave value: '
-            \ . a:around_line
-    endif
+    let l:lines_cut = []
+    for item_line in l:context
+      if item_line == ''
+        break
+      else
+        call add( l:lines_cut, item_line )
+      endif
+    endfor
 
-    let l:half_context = a:num_lines / 2
-    let l:end = a:around_line + l:half_context
-    let l:start = a:around_line - l:half_context
-
-    " if resulting range is one line too large (i.e. caller gave
-    " even a:num_lines), scooch l:start down by one
-    if l:end - l:start >=# a:num_lines
-        let l:start += 1
-    endif
-
-    let l:context_prefix = []
-    while l:start <# 1
-        let l:context_prefix += ['~']
-        let l:start += 1
-    endwhile
-
-    let l:context =
-        \ l:context_prefix
-        \ + markbar#helpers#FetchBufferLineRange(a:buffer_expr, l:start, l:end)
-
-    while len(l:context) <# a:num_lines
-        let l:context += ['~']
-    endwhile
-
-    return l:context
+    return l:lines_cut
 endfunction
+
+
+
+
+

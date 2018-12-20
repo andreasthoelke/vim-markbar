@@ -52,7 +52,7 @@ if markbar#settings#ExplicitlyRemapMarkMappings()
     call g:markbar_backtick_remapper.setMappings('noremap <silent>')
 endif
 
-augroup vim_markbar_buffer_updates
-    au!
-    autocmd BufEnter * call markbar#ui#SetEchoHeaderAutocmds()
-augroup end
+" augroup vim_markbar_buffer_updates
+"     au!
+"     autocmd BufEnter * call markbar#ui#SetEchoHeaderAutocmds()
+" augroup end

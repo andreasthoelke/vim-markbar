@@ -56,7 +56,8 @@ function! markbar#StandardMarkbarController#_getHelpText(display_verbose) abort 
             \ '" -----------------------',
         \ ]
     else
-        return [ '" Press ? for help' ]
+        " return [ '" Press ? for help' ]
+        return [ '' ]
     endif
 endfunction
 

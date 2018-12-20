@@ -307,7 +307,9 @@ endfunction
 "                           if no mark is selected.
 function! markbar#MarkbarView#_getCurrentMarkHeading() abort dict
     call markbar#MarkbarView#AssertIsMarkbarView(l:self)
-    return getline(l:self._getCurrentMarkHeadingLine())[2]
+    " return getline(l:self._getCurrentMarkHeadingLine())[2]
+    " The second char is the mark in the new heading style "[<mark> ]"
+    return getline(l:self._getCurrentMarkHeadingLine())[1]
 endfunction
 
 " RETURNS:  (v:t_number)    The line number of the 'currently selected' mark.
@@ -370,7 +372,8 @@ function! markbar#MarkbarView#_setMarkbarBufferSettings(buffer_expr) abort dict
     call setbufvar(a:buffer_expr,     '&bufhidden',    'hide')
     call setbufvar(a:buffer_expr,      '&swapfile',         0)
     call setbufvar(a:buffer_expr,      '&filetype', 'markbar')
-    call setbufvar(a:buffer_expr,        '&syntax', 'markbar')
+    " call setbufvar(a:buffer_expr,        '&syntax', 'markbar')
+    call setbufvar(a:buffer_expr,        '&syntax', 'purescript')
     call setbufvar(a:buffer_expr,  '&conceallevel',         3)
     call setbufvar(a:buffer_expr, '&concealcursor',       'n')
 

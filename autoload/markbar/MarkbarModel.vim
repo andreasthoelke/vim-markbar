@@ -159,6 +159,7 @@ endfunction
 "           the MarkbarModel object will search the global BufferCache.
 "           - If the requested mark cannot be found, throw an exception.
 function! markbar#MarkbarModel#getMarkData(mark_char) abort dict
+    echom "markChar: " . a:mark_char
     call markbar#MarkbarModel#AssertIsMarkbarModel(l:self)
     let l:is_global = markbar#helpers#IsGlobalMark(a:mark_char)
     let l:mark_buffer =

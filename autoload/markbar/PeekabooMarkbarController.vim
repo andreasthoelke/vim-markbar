@@ -107,7 +107,8 @@ function! markbar#PeekabooMarkbarController#_getHelpText(display_verbose) abort 
             \ '" -----------------------',
         \ ]
     endif
-    return [ '" Press ? for help' ]
+    " return [ '" Press ? for help' ]
+    return [ '' ]
 endfunction
 
 " RETURNS:  (v:t_list)  The name format string for the given mark, and the
