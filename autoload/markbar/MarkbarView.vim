@@ -382,6 +382,7 @@ endfunction
 
 " EFFECTS:  Set window-local settings for the given markbar buffer.
 function! markbar#MarkbarView#_setMarkbarWindowSettings(buffer_expr) abort dict
+    " return
     call markbar#MarkbarView#AssertIsMarkbarView(l:self)
     if !bufexists(a:buffer_expr)
         throw '(MarkbarView#_setMarkbarWindowSettings) Buffer does not exist: ' . a:buffer_expr

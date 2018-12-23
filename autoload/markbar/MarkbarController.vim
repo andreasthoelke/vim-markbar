@@ -266,7 +266,9 @@ function! markbar#MarkbarController#_setRefreshMarkbarAutocmds() abort dict
     let g:__active_controller = l:self
     augroup vim_markbar_refresh
         au!
-        autocmd BufEnter,BufLeave,TextChanged,CursorHold,FileChangedShellPost
+        " autocmd BufEnter,BufLeave,TextChanged,CursorHold,FileChangedShellPost
+        " TODO can I live with less frequent updates? e.g. changed text is not updated right away
+        autocmd BufEnter,BufLeave
             \ * call markbar#ui#RefreshMarkbar(g:__active_controller)
     augroup end
 endfunction
