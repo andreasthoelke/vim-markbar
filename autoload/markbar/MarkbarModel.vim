@@ -168,7 +168,7 @@ function! markbar#MarkbarModel#getMarkData(mark_char) abort dict
                 \ :
                 \ l:self.getActiveBuffer()
     let l:marks_dict =
-        \ l:self.getBufferCache(l:mark_buffer)['_marks_dict']
+        \ l:self.getBufferCache(l:mark_buffer)['marks_dict']
     if !has_key(l:marks_dict, a:mark_char)
         throw '(markbar#MarkbarModel) Could not find mark ' . a:mark_char
             \ . ' for buffer ' . l:mark_buffer
@@ -179,13 +179,23 @@ endfunction
 
 " RETURNS:  (markbar#BufferCache)   The buffer cache for the requested buffer.
 " DETAILS:  Add a new BufferCache for the requested buffer, if one does not
-"           yet exist.
-function! markbar#MarkbarModel#getBufferCache(buffer_no) abort dict
+"           yet exist and `a:no_init` is false. If `a:no_init` is true, throw
+"           an exception.
+" PARAM:    buffer_no   (v:t_number)    The bufnr() of the requested buffer.
+" PARAM:    no_init     (v:t_bool?)     Whether to create a new BufferCache if
+"                                       the requested cache is not found.
+"                                       Defaults to `v:false`.
+function! markbar#MarkbarModel#getBufferCache(buffer_no, ...) abort dict
     call markbar#MarkbarModel#AssertIsMarkbarModel(l:self)
+    let a:no_init = get(a:000, 0, v:false)
     if !has_key(l:self['_buffer_caches'], a:buffer_no)
+        if a:no_init
+            throw '(markbar#MarkbarModel) Buffer not cached: '.a:buffer_no
+        endif
         let l:self['_buffer_caches'][a:buffer_no] =
             \ markbar#BufferCache#new(a:buffer_no)
     endif
+    " will throw E716 if not found and a:no_init == v:true
     return l:self['_buffer_caches'][a:buffer_no]
 endfunction
 
