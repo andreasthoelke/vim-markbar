@@ -143,7 +143,7 @@ function! markbar#MarkbarController#_getMarkHeading(mark) abort dict
     endif
     " return "['" . a:mark.getMark() . ']:' . l:suffix
     " Style this slightly different
-    return "[" . a:mark.getMark() . ' ]' . l:suffix
+    return "|" . a:mark.getMark() . ' |' . l:suffix
 endfunction
 
 " RETURNS:  (v:t_string)    The 'default name' for the given mark, as
